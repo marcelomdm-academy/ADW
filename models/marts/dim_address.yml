@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: dim_address
+    description: "Modelo para a dimensão de endereços, incluindo informações sobre estados e países."
+    columns:
+      - name: PK_adress
+        description: "Chave primária do endereço."
+        tests:
+          - not_null
+      - name: PK_Stateprovince
+        description: "Chave primária do estado/província."
+        tests:
+          - not_null
+      - name: PK_countryregion
+        description: "Chave primária do país/região."
+        tests:
+          - not_null
+      - name: FK_countryregion
+        description: "Chave estrangeira para o país/região."
+        tests:
+          - not_null
+      - name: ADDRESSLINE1
+        description: "Linha 1 do endereço."
+      - name: ADDRESSLINE2
+        description: "Linha 2 do endereço."
+      - name: CITY
+        description: "Cidade do endereço."
+      - name: MODIFIEDDATE
+        description: "Data da última modificação do endereço."
+      - name: POSTALCODE
+        description: "Código postal do endereço."
+      - name: ROWGUID
+        description: "Identificador único do registro do endereço."
+      - name: SPATIALLOCATION
+        description: "Localização espacial do endereço."
+      - name: STATEPROVINCECODE
+        description: "Código do estado/província."
+      - name: ISONLYSTATEPROVINCEFLAG
+        description: "Flag indicando se é apenas um estado/província."
+      - name: Name_State
+        description: "Nome do estado/província."
+      - name: TERRITORYID
+        description: "Identificador do território do estado/província."
+      - name: ROWGUID_state
+        description: "Identificador único do registro do estado/província."
+      - name: Name_Country
+        description: "Nome do país/região."
+
+sources:
+  - name: stg__ADDRESS
+    description: "Fonte de dados de endereços."
+  - name: stg__STATEPROVINCE
+    description: "Fonte de dados de estados/províncias."
+  - name: stg__COUNTRYREGION
+    description: "Fonte de dados de países/regiões."

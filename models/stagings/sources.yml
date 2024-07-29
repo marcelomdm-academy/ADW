@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: 'RAW_ADVENTURE_WORKS'
+    description: "Tabelas Raw do Adventure Works"
+    
+    tables:
+      - name: ADDRESS
+      - name: COUNTRYREGION
+      - name: PRODUCT
+      - name: PRODUCTCATEGORY
+      - name: PRODUCTLISTPRICEHISTORY
+      - name: PRODUCTSUBCATEGORY
+      - name: SALESORDERDETAIL
+      - name: SALESORDERHEADER
+      - name: SALESORDERHEADERSALESREASON
+      - name: SALESREASON
+      - name: STATEPROVINCE
+      - name: PERSON
+      - name: PERSONPHONE
+      - name: EMAILADDRESS
+      - name: PHONENUMBERTYPE
+      - name: BUSINESSENTITYCONTACT
+      - name: CUSTOMER
+      - name: STORE
+      - name: BUSINESSENTITY
+      - name: CONTACTTYPE
