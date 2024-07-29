@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: calendar
+    description: "Modelo para uma tabela de calendário com informações detalhadas sobre datas."
+    columns:
+      - name: id
+        description: "Identificador da data no formato YYYYMMDD."
+        tests:
+          - not_null
+      - name: data_id
+        description: "Data no formato YYYY-MM-DD."
+        tests:
+          - not_null
+      - name: data_completa
+        description: "Data completa no formato DD-MM-YYYY."
+      - name: ano
+        description: "Ano da data."
+      - name: semana_ano
+        description: "Semana do ano em que a data cai."
+      - name: dia_ano
+        description: "Dia do ano em que a data cai."
+      - name: semestre
+        description: "Semestre do ano em que a data cai (1 ou 2)."
+      - name: mes
+        description: "Mês da data."
+      - name: month_name
+        description: "Nome do mês da data."
+      - name: dia_da_semana
+        description: "Número do dia da semana (1=Domingo, 7=Sábado)."
+      - name: day_name
+        description: "Nome do dia da semana."
+      - name: dia_util
+        description: "Indica se o dia é útil ('Sim' para dias de semana, 'Não' para sábados e domingos)."
+
+sources:
+  - name: generate_date
+    description: "Fonte de dados gerada para criar uma tabela de calendário com base em um intervalo de datas."
