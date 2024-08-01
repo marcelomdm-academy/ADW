@@ -14,9 +14,14 @@ WITH
         FROM {{ ref('stg__COUNTRYREGION') }}
     )
 
+    , territory as (
+        select *
+        from {{ ref('stg__SALESTERRITORY') }}
+    )
+
     , dim_address AS (
         SELECT
-            address.PK_adress
+            address.PK_address
             , state.PK_Stateprovince
             , country.PK_countryregion
             , state.FK_countryregion

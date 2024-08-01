@@ -25,3 +25,19 @@ sources:
       - name: STORE
       - name: BUSINESSENTITY
       - name: CONTACTTYPE
+      - name: CULTURE
+      - name: ILLUSTRATION
+      - name: PRODUCTDOCUMENT
+      - name: PRODUCTINVENTORY
+      - name: PRODUCTMODEL
+      - name: PRODUCTMODELILLUSTRATION
+      - name: PRODUCTMODELPRODUCTDESCRIPTIONCULTURE
+      - name: PRODUCTPRODUCTPHOTO
+      - name: PRODUCTVENDOR
+      - name: SPECIALOFFERPRODUCT
+      - name: TRANSACTIONHISTORY
+      - name: TRANSACTIONHISTORYARCHIVE
+      - name: PURCHASEORDERDETAIL
+      - name: PERSONCREDITCARD
+      - name: CREDITCARD
+      - name: SALESTERRITORY
