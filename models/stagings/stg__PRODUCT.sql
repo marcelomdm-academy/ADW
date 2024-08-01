@@ -10,7 +10,7 @@ WITH
             , FINISHEDGOODSFLAG
             , COLOR
             , SAFETYSTOCKLEVEL
-            , REORDERPOINT
+            , REORDERPOINT 
             , STANDARDCOST
             , LISTPRICE
             , SIZE

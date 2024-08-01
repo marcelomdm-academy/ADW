@@ -1,0 +1,11 @@
+with
+    PRODUCTMODELILLUSTRATION as (
+    select 
+       PRODUCTMODELID
+       , ILLUSTRATIONID
+       , cast(MODIFIEDDATE as date) as MODIFIEDDATE
+    from {{ source('RAW_ADVENTURE_WORKS', 'PRODUCTMODELILLUSTRATION') }}
+    )
+
+select *
+from PRODUCTMODELILLUSTRATION

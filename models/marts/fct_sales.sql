@@ -24,7 +24,7 @@ with
             order_reason.FK_order 
 	        , order_reason.FK_salesreason
             , reason.PK_salesreason
-	        , reason.reason 
+	        , reason.name_reason 
 	        , reason.REASONTYPE
         from order_reason
         left join reason
@@ -67,7 +67,7 @@ with
 	        , orderdetail.SPECIALOFFERID 
 	        , orderdetail.UNITPRICE 
 	        , orderdetail.UNITPRICEDISCOUNT
-	        , sales_reason.reason 
+	        , sales_reason.name_reason 
 	        , sales_reason.REASONTYPE
         from orderheader
         left join orderdetail
