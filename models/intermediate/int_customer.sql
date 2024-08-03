@@ -11,7 +11,7 @@ with
 
     , int_customer as (
         select 
-            customer.PK_customer
+            COALESCE(customer.PK_customer, person.FK_business) AS PK_customer -- Substitui valores nulos de PK_customer por FK_business
             , customer.FK_person
             , customer.STOREID
             , customer.TERRITORYID 
@@ -28,8 +28,7 @@ with
             from person
             left join customer
                     on person.FK_business = customer.PK_customer
-        )
-
+    )
         select *
         from int_customer
         
