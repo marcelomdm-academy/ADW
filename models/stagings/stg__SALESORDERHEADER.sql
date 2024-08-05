@@ -5,8 +5,8 @@ with
         , cast(CUSTOMERID as number(38,0)) as FK_customer
 	    , cast(SALESPERSONID as number(38,0)) as FK_salesperson 
 	    ,  cast(TERRITORYID as number(38,0)) as  FK_territory
-	    ,  cast(BILLTOADDRESSID as number(38,0)) as FK_billadress 
-	    ,  cast(SHIPTOADDRESSID as number(38,0)) as  FK_shipadress
+	    ,  cast(BILLTOADDRESSID as number(38,0)) as FK_billaddress 
+	    ,  cast(SHIPTOADDRESSID as number(38,0)) as  FK_shipaddress
 	    ,  cast(SHIPMETHODID as number(38,0)) as  FK_shipmethod
 	    ,  cast(CREDITCARDID as number(38,0)) as FK_creditcard
         ,  cast(CURRENCYRATEID as number(38,0)) as  FK_currencyrated

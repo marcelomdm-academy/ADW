@@ -24,8 +24,8 @@ with
             , orders.FK_customer
 	        , orders.FK_salesperson 
 	        , orders.FK_territory
-	        , orders.FK_billadress 
-	        , orders.FK_shipadress
+	        , orders.FK_billaddress 
+	        , orders.FK_shipaddress
 	        , orders.FK_shipmethod
 	        , orders.FK_creditcard
             , orders.FK_currencyrated

@@ -36,12 +36,12 @@ with
             , product.SELLSTARTDATE
             , product.SELLENDDATE
             , product.DISCONTINUEDDATE
-            , product.ROWGUID
 	        , orderdetail.CARRIERTRACKINGNUMBER 
 	        , orderdetail.ORDERQTY 
 	        , orderdetail.SPECIALOFFERID 
 	        , orderdetail.UNITPRICE 
-	        , orderdetail.UNITPRICEDISCOUNT 
+	        , orderdetail.UNITPRICEDISCOUNT
+            , orderdetail.ORDERQTY*orderdetail.unitprice*(1 - orderdetail.UNITPRICEDISCOUNT) as valor_liquido
         from product
         left join orderdetail
                 on product.PK_product = orderdetail.FK_product

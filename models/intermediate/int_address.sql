@@ -1,5 +1,5 @@
 WITH 
-    city as (
+    address as (
         SELECT *
         FROM {{ ref('stg__ADDRESS') }}
     )
@@ -14,31 +14,57 @@ WITH
         FROM {{ ref('stg__COUNTRYREGION') }}
     )
 
-
-    , int_address as (
-        SELECT
-            city.PK_address
-            , state.PK_Stateprovince
-            , country.PK_countryregion
-            , state.FK_countryregion
-            , city.CITY
-            , state.Name_State 
-            , country.Name_Country
-            , city.MODIFIEDDATE
-            , city.POSTALCODE
-            , city.ROWGUID
-            , city.SPATIALLOCATION
-            , state.STATEPROVINCECODE 
-            , state.ISONLYSTATEPROVINCEFLAG 
-            , state.ROWGUID_state
-            , state.TERRITORYID 
-        FROM city
-        LEFT JOIN state
-            ON city.FK_Stateprovince = state.PK_Stateprovince
-        LEFT JOIN country  
-            ON state.FK_countryregion = country.PK_countryregion
+    , salesorder as (
+        select *
+        from {{ ref('stg__SALESORDERHEADER') }}
     )
 
-SELECT *
-FROM int_address
+    , territory as (
+        select*
+        from {{ ref('stg__SALESTERRITORY') }}
 
+    )
+
+    , join_sales_address  as (
+        select
+            salesorder.PK_order 
+	        , salesorder.FK_shipaddress
+            , address.PK_address
+            , address.FK_Stateprovince
+            , address.CITY
+        from salesorder
+        left join address
+                on salesorder.FK_shipaddress = address.PK_address
+    )
+
+     , join_state as (
+        select
+            join_sales_address.FK_shipaddress
+            , join_sales_address.city
+
+            , state.name_state
+            , state.FK_countryregion
+            , state.FK_territory
+        from join_sales_address
+        left join state 
+            on join_sales_address.FK_Stateprovince = state.PK_Stateprovince
+     )
+
+     ,  join_country_territory as (
+        select
+            join_state.city
+            , join_state.name_state
+
+            , country.name_country
+
+            , territory.name_territory
+
+        from join_state
+        left join country 
+                on join_state.FK_countryregion = country.PK_countryregion
+        left join territory
+                on join_state.FK_territory = territory.PK_territory
+     )
+
+    select *
+    from join_country_territory 
