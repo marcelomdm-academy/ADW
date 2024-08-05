@@ -35,8 +35,8 @@ with
             , salesorder.FK_customer
 	        , salesorder.FK_salesperson 
 	        , salesorder.FK_territory
-	        , salesorder.FK_billadress 
-	        , salesorder.FK_shipadress
+	        , salesorder.FK_billaddress 
+	        , salesorder.FK_shipaddress
 	        , salesorder.FK_shipmethod
 	        , salesorder.FK_creditcard
             , salesorder.FK_currencyrated

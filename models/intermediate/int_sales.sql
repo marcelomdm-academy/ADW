@@ -15,8 +15,8 @@ with
         , orderheader.FK_customer
 	    , orderheader.FK_salesperson 
 	    , orderheader.FK_territory
-	    , orderheader.FK_billadress 
-	    , orderheader.FK_shipadress
+	    , orderheader.FK_billaddress 
+	    , orderheader.FK_shipaddress
 	    , orderheader.FK_shipmethod
 	    , orderheader.FK_creditcard
         , orderheader.FK_currencyrated

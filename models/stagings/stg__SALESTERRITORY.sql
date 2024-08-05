@@ -2,7 +2,7 @@ with
     SALESTERRITORY as (
     select 
         cast(TERRITORYID as number(38,0)) as  PK_territory 
-	    , NAME 
+	    , cast(NAME as varchar) as name_territory
 	    , COUNTRYREGIONCODE 
 	    , GROUP_ 
 	    , SALESYTD 
