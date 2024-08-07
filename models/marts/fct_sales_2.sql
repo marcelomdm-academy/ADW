@@ -13,7 +13,7 @@ with
         select 
             PK_creditcard
             , CARDNUMBER
-            , COALESCE(CARDTYPE, 'No_credit_card') AS CARDTYPE  -- Substitui NULL por 'No_credit_card' 
+            , CARDTYPE  
             , EXPIRATION_DATE
         from {{ ref('stg__CREDITCARD') }}
     )
@@ -51,19 +51,49 @@ with
 	        , orderdetail.SPECIALOFFERID 
 	        , orderdetail.UNITPRICE 
 	        , orderdetail.UNITPRICEDISCOUNT 
-
-            , creditcard.PK_creditcard
-            , creditcard.CARDNUMBER
-            , COALESCE(CARDTYPE, 'Not_resgistered') AS CARDTYPE  -- Substitui NULL por 'Not_registered'
-            , creditcard.EXPIRATION_DATE 
            
         from orders
         left join orderdetail
                 on orders.PK_order = orderdetail.FK_order
-        left join creditcard
-                on orders.FK_creditcard = creditcard.PK_creditcard
+    )
+
+    , fato_vendas as (
+        select 
+            creditcard.PK_creditcard
+            , COALESCE(CARDTYPE, 'Not_resgistered') AS CARDTYPE  -- Substitui NULL por 'Not_registered'
+
+            , fct_sales.PK_order 
+            , fct_sales.FK_customer
+	        , fct_sales.FK_salesperson 
+	        , fct_sales.FK_territory
+	        , fct_sales.FK_billaddress 
+	        , fct_sales.FK_shipaddress
+	        , fct_sales.FK_shipmethod
+	        , fct_sales.FK_creditcard
+            , fct_sales.FK_currencyrated
+
+            , fct_sales.PK_orderdetail
+            , fct_sales.FK_order
+	        , fct_sales.FK_product
+
+	        , fct_sales.REVISIONNUMBER 
+	        , fct_sales.ORDERDATE
+	        , fct_sales.duedate
+	        , fct_sales.SHIPDATE 
+	        , fct_sales.SUBTOTAL 
+	        , fct_sales.TAXAMT 
+	        , fct_sales.FREIGHT 
+	        , fct_sales.TOTALDUE 
+	        , fct_sales.ORDERQTY 
+	        , fct_sales.SPECIALOFFERID 
+	        , fct_sales.UNITPRICE 
+	        , fct_sales.UNITPRICEDISCOUNT 
+            from fct_sales
+            left join creditcard
+                    on fct_sales.FK_creditcard = creditcard.PK_creditcard
+            
     )
 
     select *
-    from fct_sales
+    from fato_vendas
         
