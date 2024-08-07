@@ -39,7 +39,8 @@ WITH
 
      , join_state as (
         select
-            join_sales_address.FK_shipaddress
+            join_sales_address.PK_order 
+            , join_sales_address.FK_shipaddress
             , join_sales_address.city
 
             , state.name_state
@@ -52,7 +53,8 @@ WITH
 
      ,  join_country_territory as (
         select
-            join_state.city
+            join_state.PK_order
+            , join_state.city
             , join_state.name_state
 
             , country.name_country

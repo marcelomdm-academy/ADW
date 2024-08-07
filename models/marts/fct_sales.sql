@@ -47,9 +47,6 @@ with
 	        , orders.TAXAMT 
 	        , orders.FREIGHT 
 	        , orders.TOTALDUE 
-	        , orders.COMMENT 
-	        , orders.ROWGUID
-	        , orderdetail.CARRIERTRACKINGNUMBER 
 	        , orderdetail.ORDERQTY 
 	        , orderdetail.SPECIALOFFERID 
 	        , orderdetail.UNITPRICE 
