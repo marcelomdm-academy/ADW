@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "Dimensão de clientes com informações detalhadas sobre cada cliente"
+    columns:
+      - name: PK_customer
+        description: "Chave primária do cliente. Substitui valores nulos de PK_customer por FK_business."
+        tests:
+          - not_null
+          - unique
+      - name: name_customer
+        description: "Nome completo do cliente. Substitui valores nulos por 'Not registered'."
+      - name: STOREID
+        description: "ID da loja associada ao cliente."
+      - name: TERRITORYID
+        description: "ID do território associado ao cliente."
+      - name: ACCOUNTNUMBER
+        description: "Número da conta do cliente."
+      - name: FK_business
+        description: "Chave estrangeira de negócios associada ao cliente."

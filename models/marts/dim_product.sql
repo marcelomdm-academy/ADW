@@ -4,5 +4,5 @@ WITH
         from {{ ref('int_product') }}
     )
 
-    select *
-    from dim_product
+select *
+from dim_product

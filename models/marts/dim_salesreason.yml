@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: coalesce_order
+    description: "Modelo que une informações de pedidos com motivos de venda, substituindo valores nulos por padrões."
+    columns:
+      - name: PK_salesreason
+        description: "Chave primária da razão de venda. Substitui valores nulos por 0."
+        tests:
+          - unique
+          - not_null
+      - name: FK_order
+        description: "Chave estrangeira que referencia o pedido associado à razão de venda."
+      - name: name_reason
+        description: "Nome da razão de venda. Substitui valores nulos por 'No sales reason'."
+      - name: REASONTYPE
+        description: "Tipo da razão de venda. Substitui valores nulos por 'No reason type'."

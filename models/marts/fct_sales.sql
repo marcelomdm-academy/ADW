@@ -13,57 +13,62 @@ with
         select 
             PK_creditcard
             , CARDNUMBER
-            , COALESCE(CARDTYPE, 'No_credit_card') AS CARDTYPE  -- Substitui NULL por 'No_credit_card' 
+            , CARDTYPE
             , EXPIRATION_DATE
         from {{ ref('stg__CREDITCARD') }}
     )
 
-    , fct_sales as (
+    , row_orders as (
         select 
-            orders.PK_order 
-            , orders.FK_customer
-	        , orders.FK_salesperson 
-	        , orders.FK_territory
-	        , orders.FK_billaddress 
-	        , orders.FK_shipaddress
-	        , orders.FK_shipmethod
-	        , orders.FK_creditcard
-            , orders.FK_currencyrated
-
-            , orderdetail.PK_orderdetail
-            , orderdetail.FK_order
-	        , orderdetail.FK_product
-
-	        , orders.REVISIONNUMBER 
-	        , orders.ORDERDATE
-	        , orders.duedate
-	        , orders.SHIPDATE
-	        , orders.STATUS 
-	        , orders.ONLINEORDERFLAG 
-	        , orders.PURCHASEORDERNUMBER 
-	        , orders.ACCOUNTNUMBER 
-	        , orders.CREDITCARDAPPROVALCODE     
-	        , orders.SUBTOTAL 
-	        , orders.TAXAMT 
-	        , orders.FREIGHT 
-	        , orders.TOTALDUE 
-	        , orderdetail.ORDERQTY 
-	        , orderdetail.SPECIALOFFERID 
-	        , orderdetail.UNITPRICE 
-	        , orderdetail.UNITPRICEDISCOUNT 
-
-            , creditcard.PK_creditcard
-            , creditcard.CARDNUMBER
-            , COALESCE(CARDTYPE, 'Not_resgistered') AS CARDTYPE  -- Substitui NULL por 'Not_registered'
-            , creditcard.EXPIRATION_DATE 
-           
+            orders.PK_order
+            , orderdetail.PK_orderdetail 
+            , orderdetail.ORDERQTY 
+            , row_number () over (partition by orders.PK_order order by orderdetail.FK_order) as row_orderdetail
+            , orderdetail.unitprice
+            , orderdetail.UNITPRICEDISCOUNT
+            , orderdetail.ORDERQTY*orderdetail.UNITPRICE as valor_bruto
+            , orderdetail.ORDERQTY*orderdetail.unitprice*(1 - orderdetail.UNITPRICEDISCOUNT) as valor_liquido
         from orders
-        left join orderdetail
+        inner join orderdetail
                 on orders.PK_order = orderdetail.FK_order
-        left join creditcard
-                on orders.FK_creditcard = creditcard.PK_creditcard
+    )
+  
+    , rowsales_orders as (
+        select 
+            PK_order
+            , count(row_orderdetail) as count_products
+            , sum(valor_bruto) as gross_value
+            , sum(ORDERQTY) as count_itens
+        from row_orders
+        group by PK_order
+    )
+
+    , fct_sales as(
+        select      
+            orders.PK_order
+            , orders.ORDERDATE
+            , orders.order_month
+            , orders.order_year
+            , orders.FK_customer
+            , orders.FK_shipaddress
+            , orders.subtotal
+            , orders.totaldue            
+            , coalesce(orders.order_status, 'No Status') as order_status
+            , rowsales_orders.count_products
+            , rowsales_orders.count_itens
+            , rowsales_orders.gross_value        
+            , coalesce(creditcard.CARDTYPE, 'No Creditcard') as CARDTYPE
+        from orders
+        left join rowsales_orders 
+            on orders.PK_order = rowsales_orders.PK_order
+        left join creditcard 
+            on orders.FK_creditcard = creditcard.PK_creditcard
+        order by orders.PK_order
     )
 
     select *
     from fct_sales
-        
+
+
+    
+   

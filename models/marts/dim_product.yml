@@ -2,71 +2,22 @@ version: 2
 
 models:
   - name: dim_product
-    description: "Tabela intermediária que combina informações de produtos e detalhes de pedidos."
+    description: "Dimensão que detalha os pedidos com informações de produtos, incluindo quantidade, preços e descontos aplicados."
     columns:
-      - name: PK_product
-        description: "Identificador único do produto."
-        tests:
-          - not_null
       - name: PK_orderdetail
-        description: "Identificador único do detalhe do pedido."
+        description: "Chave primária do detalhe do pedido."
+        tests:
+          - unique
+          - not_null
       - name: FK_order
-        description: "Chave estrangeira que referencia o pedido."
+        description: "Chave estrangeira que referencia o pedido associado ao detalhe."
       - name: name_product
-        description: "Nome do produto."
-      - name: FK_subcategory
-        description: "Chave estrangeira que referencia a subcategoria do produto."
-      - name: FK_model
-        description: "Chave estrangeira que referencia o modelo do produto."
-      - name: PRODUCTNUMBER
-        description: "Número do produto."
-      - name: MAKEFLAG
-        description: "Indica se o produto é fabricado internamente (1) ou adquirido externamente (0)."
-      - name: FINISHEDGOODSFLAG
-        description: "Indica se o item é um produto acabado."
-      - name: COLOR
-        description: "Cor do produto."
-      - name: SAFETYSTOCKLEVEL
-        description: "Nível de estoque de segurança do produto."
-      - name: REORDERPOINT
-        description: "Ponto de reordenação do produto."
-      - name: STANDARDCOST
-        description: "Custo padrão do produto."
-      - name: LISTPRICE
-        description: "Preço de lista do produto."
-      - name: SIZE
-        description: "Tamanho do produto."
-      - name: SIZEUNITMEASURECODE
-        description: "Código da unidade de medida para o tamanho."
-      - name: WEIGHTUNITMEASURECODE
-        description: "Código da unidade de medida para o peso."
-      - name: WEIGHT
-        description: "Peso do produto."
-      - name: DAYSTOMANUFACTURE
-        description: "Número de dias necessários para fabricar o produto."
-      - name: PRODUCTLINE
-        description: "Linha de produto."
-      - name: CLASS
-        description: "Classe do produto."
-      - name: STYLE
-        description: "Estilo do produto."
-      - name: SELLSTARTDATE
-        description: "Data de início de vendas do produto."
-      - name: SELLENDDATE
-        description: "Data de término de vendas do produto."
-      - name: DISCONTINUEDDATE
-        description: "Data de descontinuação do produto."
-      - name: ROWGUID
-        description: "Identificador global exclusivo da linha do produto."
-      - name: CARRIERTRACKINGNUMBER
-        description: "Número de rastreamento do transportador."
+        description: "Nome do produto associado ao detalhe do pedido."
       - name: ORDERQTY
-        description: "Quantidade de produtos no pedido."
+        description: "Quantidade de produtos solicitada neste detalhe do pedido."
       - name: SPECIALOFFERID
-        description: "Identificador da oferta especial aplicada ao pedido."
+        description: "Identificador da oferta especial aplicada ao produto neste detalhe do pedido."
       - name: UNITPRICE
-        description: "Preço unitário do produto no pedido."
+        description: "Preço unitário do produto neste detalhe do pedido."
       - name: UNITPRICEDISCOUNT
-        description: "Desconto no preço unitário do produto no pedido."
-      - name: ROWGUID
-        description: "Identificador global exclusivo da linha do detalhe do pedido."
+        description: "Desconto aplicado ao preço unitário do produto neste detalhe do pedido."
