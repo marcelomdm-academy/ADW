@@ -1,38 +1,25 @@
 version: 2
 
 models:
-  - name: calendar
-    description: "Modelo para uma tabela de calendário com informações detalhadas sobre datas."
+  - name: dim_dates
+    description: "Dimensão de datas, incluindo informações sobre dia, mês, ano, dia da semana, dia do ano, e nome dos meses em português."
     columns:
-      - name: id
-        description: "Identificador da data no formato YYYYMMDD."
+      - name: MY_DATE
+        description: "Data completa."
         tests:
           - not_null
-      - name: data_id
-        description: "Data no formato YYYY-MM-DD."
-        tests:
-          - not_null
-      - name: data_completa
-        description: "Data completa no formato DD-MM-YYYY."
-      - name: ano
+          - unique   
+      - name: year
         description: "Ano da data."
-      - name: semana_ano
-        description: "Semana do ano em que a data cai."
-      - name: dia_ano
-        description: "Dia do ano em que a data cai."
-      - name: semestre
-        description: "Semestre do ano em que a data cai (1 ou 2)."
-      - name: mes
-        description: "Mês da data."
+      - name: month
+        description: "Mês da data em formato numérico."
       - name: month_name
-        description: "Nome do mês da data."
-      - name: dia_da_semana
-        description: "Número do dia da semana (1=Domingo, 7=Sábado)."
+        description: "Nome do mês em inglês."
+      - name: day
+        description: "Dia do mês."
       - name: day_name
         description: "Nome do dia da semana."
-      - name: dia_util
-        description: "Indica se o dia é útil ('Sim' para dias de semana, 'Não' para sábados e domingos)."
-
-sources:
-  - name: generate_date
-    description: "Fonte de dados gerada para criar uma tabela de calendário com base em um intervalo de datas."
+      - name: day_of_year
+        description: "Dia do ano."
+      - name: Nome_mes
+        description: "Nome do mês em português, utilizando um mapeamento por meio de uma instrução CASE."

@@ -24,10 +24,28 @@ with
 	    , FREIGHT 
 	    , TOTALDUE 
 	    , COMMENT 
-	    , ROWGUID 
+	    , ROWGUID
 	    , cast(MODIFIEDDATE as date) as modifieddate
     from {{ source('RAW_ADVENTURE_WORKS', 'SALESORDERHEADER') }}
     )
 
-select *
-from SALESORDERHEADER
+    , extract_year_status as (
+        select
+            *
+            , extract(year from ORDERDATE) as order_year
+            , extract(month from ORDERDATE) as order_month
+            
+          
+            , case
+                when status = 1 then 'In process'
+                when status = 2 then 'Approved'
+                when status = 3 then 'Backordered'
+                when status = 4 then 'Rejected'
+                when status = 5 then 'Shipped'
+                when status = 6 then 'Canceled'
+            end as order_status
+    from SALESORDERHEADER
+    )
+
+    select *
+    from extract_year_status

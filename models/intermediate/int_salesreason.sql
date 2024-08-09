@@ -20,9 +20,9 @@ with
 	        , salesreason.name_reason
 	        , salesreason.REASONTYPE
             , orderreason.FK_order 
-            from salesreason
-            left join orderreason
-                    on salesreason.PK_salesreason = orderreason.FK_salesreason
+            from orderreason 
+            left join salesreason
+                    on orderreason.FK_salesreason = salesreason.PK_salesreason
         )
 
     , join_reason_header as(
@@ -33,29 +33,6 @@ with
             , join_reason.FK_order 
             , salesorder.PK_order 
             , salesorder.FK_customer
-	        , salesorder.FK_salesperson 
-	        , salesorder.FK_territory
-	        , salesorder.FK_billaddress 
-	        , salesorder.FK_shipaddress
-	        , salesorder.FK_shipmethod
-	        , salesorder.FK_creditcard
-            , salesorder.FK_currencyrated
-	        , salesorder.REVISIONNUMBER 
-	        , salesorder.ORDERDATE
-	        , salesorder.duedate
-	        , salesorder.SHIPDATE
-	        , salesorder.STATUS 
-	        , salesorder.ONLINEORDERFLAG 
-	        , salesorder.PURCHASEORDERNUMBER 
-	        , salesorder.ACCOUNTNUMBER 
-	        , salesorder.CREDITCARDAPPROVALCODE     
-	        , salesorder.SUBTOTAL 
-	        , salesorder.TAXAMT 
-	        , salesorder.FREIGHT 
-	        , salesorder.TOTALDUE 
-	        , salesorder.COMMENT 
-	        , salesorder.ROWGUID 
-	        , salesorder.modifieddate
         from salesorder
         left join join_reason 
                 on salesorder.PK_order = join_reason.FK_order 
@@ -63,13 +40,12 @@ with
 
     , coalesce_order as (
         select
-            join_reason_header.PK_order
-            , coalesce(join_reason_header.PK_salesreason, 0) as PK_salesreason
-            , coalesce(name_reason, 'No sales_reason') as name_reason
-            , coalesce(REASONTYPE, 'No reason_type') as REASONTYPE
+            coalesce(join_reason_header.PK_salesreason, 0) as PK_salesreason
+            , join_reason_header.FK_order
+            , coalesce(name_reason, 'No sales reason') as name_reason
+            , coalesce(REASONTYPE, 'No reason type') as REASONTYPE
             from join_reason_header
     )
 
         select *
         from coalesce_order
-        order by PK_order

@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: dim_address
+    description: "Dimensão de endereços de vendas, incluindo informações detalhadas sobre cidade, estado, país e território."
+    columns:
+      - name: PK_address
+        description: "Chave primária do endereço."
+        test:
+          - not_null
+          - unique          
+      - name: city
+        description: "Nome da cidade."
+      - name: name_state
+        description: "Nome do estado."
+      - name: FK_countryregion
+        description: "Chave estrangeira do país/região."
+      - name: name_country
+        description: "Nome do país."
+      - name: FK_territory
+        description: "Chave estrangeira do território."
+      - name: name_territory
+        description: "Nome do território."

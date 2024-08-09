@@ -2,117 +2,34 @@ version: 2
 
 models:
   - name: fct_sales
-    description: "Tabela de fatos das vendas que integra informações de pedidos, detalhes de pedidos e cartões de crédito."
+    description: "Modelo que agrega informações sobre pedidos de vendas, incluindo detalhes de produtos, valores brutos e líquidos, tipos de cartão de crédito e status dos pedidos."
     columns:
       - name: PK_order
         description: "Chave primária do pedido."
         tests:
           - not_null
-          - unique
-
-      - name: FK_customer
-        description: "Chave estrangeira para o cliente."
-        tests:
-          - not_null
-
-      - name: FK_salesperson
-        description: "Chave estrangeira para o vendedor."
-        
-      - name: FK_territory
-        description: "Chave estrangeira para o território."
-
-      - name: FK_billadress
-        description: "Chave estrangeira para o endereço de cobrança."
-
-      - name: FK_shipadress
-        description: "Chave estrangeira para o endereço de entrega."
-
-      - name: FK_shipmethod
-        description: "Chave estrangeira para o método de envio."
-
-      - name: FK_creditcard
-        description: "Chave estrangeira para o cartão de crédito usado."
-
-      - name: FK_currencyrated
-        description: "Chave estrangeira para a taxa de câmbio usada."
-
-      - name: PK_orderdetail
-        description: "Chave primária do detalhe do pedido."
-
-      - name: FK_order
-        description: "Chave estrangeira para o pedido."
-
-      - name: FK_product
-        description: "Chave estrangeira para o produto."
-
-      - name: REVISIONNUMBER
-        description: "Número da revisão do pedido."
-
+          - unique       
       - name: ORDERDATE
         description: "Data do pedido."
-
-      - name: duedate
-        description: "Data de vencimento do pedido."
-
-      - name: SHIPDATE
-        description: "Data de envio do pedido."
-
-      - name: STATUS
-        description: "Status do pedido."
-
-      - name: ONLINEORDERFLAG
-        description: "Indicador se o pedido foi realizado online."
-
-      - name: PURCHASEORDERNUMBER
-        description: "Número do pedido de compra."
-
-      - name: ACCOUNTNUMBER
-        description: "Número da conta associada ao pedido."
-
-      - name: CREDITCARDAPPROVALCODE
-        description: "Código de aprovação do cartão de crédito."
-
-      - name: SUBTOTAL
-        description: "Subtotal do pedido."
-
-      - name: TAXAMT
-        description: "Valor do imposto aplicado ao pedido."
-
-      - name: FREIGHT
-        description: "Valor do frete."
-
-      - name: TOTALDUE
-        description: "Total devido pelo pedido."
-
-      - name: COMMENT
-        description: "Comentários adicionais sobre o pedido."
-
-      - name: ROWGUID
-        description: "Identificador único da linha."
-
-      - name: CARRIERTRACKINGNUMBER
-        description: "Número de rastreamento do transportador."
-
-      - name: ORDERQTY
-        description: "Quantidade de itens pedidos."
-
-      - name: SPECIALOFFERID
-        description: "ID da oferta especial aplicada ao pedido."
-
-      - name: UNITPRICE
-        description: "Preço unitário dos itens no pedido."
-
-      - name: UNITPRICEDISCOUNT
-        description: "Desconto aplicado ao preço unitário."
-
-      - name: PK_creditcard
-        description: "Chave primária do cartão de crédito."
-
-      - name: CARDNUMBER
-        description: "Número do cartão de crédito."
-
+      - name: order_month
+        description: "Mês em que o pedido foi realizado."
+      - name: order_year
+        description: "Ano em que o pedido foi realizado."
+      - name: FK_customer
+        description: "Chave estrangeira referenciando o cliente que fez o pedido."
+      - name: FK_shipaddress
+        description: "Chave estrangeira referenciando o endereço de envio do pedido."
+      - name: subtotal
+        description: "Subtotal do pedido antes de impostos e descontos."
+      - name: totaldue
+        description: "Valor total devido do pedido após impostos e descontos."
+      - name: order_status
+        description: "Status do pedido. Substitui valores nulos por 'No Status'."
+      - name: count_products
+        description: "Número de produtos diferentes incluídos no pedido."
+      - name: count_itens
+        description: "Número total de itens no pedido."
+      - name: gross_value
+        description: "Valor bruto do pedido, calculado como a soma dos valores brutos de cada produto no pedido."
       - name: CARDTYPE
-        description: "Tipo de cartão de crédito."
-
-      - name: EXPIRATION_DATE
-        description: "Data de expiração do cartão de crédito."
+        description: "Tipo de cartão de crédito utilizado no pedido. Substitui valores nulos por 'No Creditcard'."

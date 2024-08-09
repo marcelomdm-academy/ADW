@@ -1,43 +1,40 @@
 WITH 
-generate_date AS (
-    SELECT 
-        SEQ4() - 1 AS day_offset
-        , DATEADD(day, SEQ4() - 1, '2000-01-01'::date) AS d
-    FROM TABLE(GENERATOR(ROWCOUNT => 18597))  -- Número de dias entre 2000-01-01 e 2050-01-01
-),
-
-calendar AS (
-    SELECT
-        TO_CHAR(d, 'YYYYMMDD') AS id
-        , TO_CHAR(d, 'YYYY-MM-DD') AS data_id
-        , TO_CHAR(d, 'DD-MM-YYYY') AS data_completa
-        , EXTRACT(YEAR FROM d) AS ano
-        , EXTRACT(WEEK FROM d) AS semana_ano
-        , EXTRACT(DOY FROM d) AS dia_ano
-        , CASE
-            WHEN EXTRACT(QUARTER FROM d) IN (1, 2) THEN '1'
-            ELSE '2'
-        END AS semestre
-        , EXTRACT(MONTH FROM d) AS mes
-        , TO_CHAR(d, 'Month') AS month_name
-        , EXTRACT(DAYOFWEEK FROM d) AS dia_da_semana
-        , TO_CHAR(d, 'Day') AS day_name
-        , CASE
-            WHEN EXTRACT(DAYOFWEEK FROM d) IN (1, 7) THEN 'Não'  -- 1=Domingo, 7=Sábado
-            ELSE 'Sim'
-        END AS dia_util
-    FROM generate_date
+    Dim_dates AS (
+        SELECT DATEADD(DAY, SEQ4(), '2011-05-01') AS MY_DATE
+        FROM TABLE(GENERATOR(ROWCOUNT => 5480))  -- Number of days after reference date in previous line
 )
+    , dates as ( 
+        SELECT 
+            MY_DATE
+            , YEAR(MY_DATE) AS year
+            , MONTH(MY_DATE) AS month
+            , MONTHNAME(MY_DATE) AS month_name
+            , DAY(MY_DATE) AS day
+            , DAYNAME(MY_DATE) AS day_name
+            , DAYOFYEAR(MY_DATE) AS day_of_year
+        FROM Dim_dates
+    )
+    
+    , datas as (
+        select
+            *
+            , case
+                when month = 1 then 'Janeiro'
+                when month = 2 then 'Fevereiro'
+                when month = 3 then 'Março'
+                when month = 4 then 'Abril'
+                when month = 5 then 'Maio'
+                when month = 6 then 'Junho'
+                when month = 7 then 'Julho'
+                when month = 8 then 'Agosto'
+                when month = 9 then 'Setembro'
+                when month = 10 then 'Outubro'
+                when month = 11 then 'Novembro'
+                when month = 12 then 'Dezembro'
+            end as Nome_mes
+        from dates
+    )
 
-SELECT
-    id
-    , data_id
-    , data_completa
-    , ano
-    , semana_ano
-    , dia_ano
-    , semestre
-    , mes
-    , dia_da_semana
-    , dia_util
-FROM calendar
+
+    select *
+    from datas
