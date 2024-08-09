@@ -24,10 +24,7 @@ with
             , orderdetail.PK_orderdetail 
             , orderdetail.ORDERQTY 
             , row_number () over (partition by orders.PK_order order by orderdetail.FK_order) as row_orderdetail
-            , orderdetail.unitprice
-            , orderdetail.UNITPRICEDISCOUNT
             , orderdetail.ORDERQTY*orderdetail.UNITPRICE as valor_bruto
-            , orderdetail.ORDERQTY*orderdetail.unitprice*(1 - orderdetail.UNITPRICEDISCOUNT) as valor_liquido
         from orders
         inner join orderdetail
                 on orders.PK_order = orderdetail.FK_order
@@ -56,7 +53,7 @@ with
             , coalesce(orders.order_status, 'No Status') as order_status
             , rowsales_orders.count_products
             , rowsales_orders.count_itens
-            , rowsales_orders.gross_value        
+            , rowsales_orders.gross_value      
             , coalesce(creditcard.CARDTYPE, 'No Creditcard') as CARDTYPE
         from orders
         left join rowsales_orders 
