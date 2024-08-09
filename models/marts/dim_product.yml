@@ -21,3 +21,5 @@ models:
         description: "Preço unitário do produto neste detalhe do pedido."
       - name: UNITPRICEDISCOUNT
         description: "Desconto aplicado ao preço unitário do produto neste detalhe do pedido."
+      - name: valor_liquido
+        description: "Preço unitário do produto após o desconto aplicado."

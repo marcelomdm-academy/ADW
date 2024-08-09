@@ -18,6 +18,7 @@ with
 	        , orderdetail.SPECIALOFFERID 
 	        , orderdetail.UNITPRICE 
 	        , orderdetail.UNITPRICEDISCOUNT
+            , orderdetail.ORDERQTY*orderdetail.unitprice*(1 - orderdetail.UNITPRICEDISCOUNT) as valor_liquido
         from orderdetail
         left join product
                 on orderdetail.FK_product = product.PK_product
